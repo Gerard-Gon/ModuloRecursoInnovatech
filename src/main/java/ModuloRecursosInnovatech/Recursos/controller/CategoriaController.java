@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ModuloRecursosInnovatech.Recursos.model.Categoria;
 import ModuloRecursosInnovatech.Recursos.service.CategoriaService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/api/v1/categorias")
@@ -27,6 +28,7 @@ public class CategoriaController {
 
 
     @GetMapping
+    @Operation(summary = "Listado de la categoria de los desarrolladores")
     public ResponseEntity<List<Categoria>> getAllCategorias() {
         List<Categoria> categorias = categoriaService.getAllCategoria();
         if (categorias.isEmpty()) {
@@ -37,7 +39,7 @@ public class CategoriaController {
 
 
     @GetMapping("/{id}")
-
+    @Operation(summary = "LLama una categoria de los desarrolladores")
     public ResponseEntity<Categoria> getCategoriaById(@PathVariable Integer id) {
         Categoria categoria = categoriaService.getCategoriaById(id);
         if (categoria == null) {
@@ -48,6 +50,7 @@ public class CategoriaController {
 
    
     @PostMapping
+    @Operation(summary = "Para ingresar una categoria nueva")
     public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) {
         
         categoria.setId(null); 
@@ -57,6 +60,7 @@ public class CategoriaController {
 
     
     @PutMapping("/{id}")
+    @Operation(summary = "Cambiar una categoria")
     public ResponseEntity<Categoria> updateCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
         // Verificamos si existe antes de intentar actualizar
         if (categoriaService.getCategoriaById(id) == null) {
@@ -70,6 +74,7 @@ public class CategoriaController {
     
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar una categoria")
     public ResponseEntity<Void> deleteCateogoria(@PathVariable Integer id) {
         categoriaService.deleteCategoria(id);
         return ResponseEntity.noContent().build();  
