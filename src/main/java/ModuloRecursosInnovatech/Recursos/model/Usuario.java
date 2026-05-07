@@ -1,5 +1,7 @@
 package ModuloRecursosInnovatech.Recursos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
     @Column(name = "uidFirebase", nullable = false, unique = true, length = 128)
     private String uidFirebase;
 
