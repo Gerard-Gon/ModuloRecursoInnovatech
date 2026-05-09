@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import ModuloRecursosInnovatech.Recursos.dto.UsuarioDTO;
 import ModuloRecursosInnovatech.Recursos.model.Usuario;
 import ModuloRecursosInnovatech.Recursos.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,15 +54,11 @@ public class UsuarioController {
     }
 
     @PostMapping
-    @Operation(summary = "Para ingresar un usuario nuevo vinculado a su Firebase UID")
-    public ResponseEntity<Usuario> createUsuario(
-            @RequestBody Usuario usuario, 
-            @RequestHeader("X-User-UID") String uid) { // Capturamos el UID del Gateway
-                                                       // con el token obtenido 
+    @Operation(summary = "Para ingresar un usuario/trabajador nuevo vinculado a su Firebase UID")
+    public ResponseEntity<Usuario> createUsuario(@RequestBody UsuarioDTO usuarioDTO) { 
         
-        usuario.setId(null); 
-        // Usamos el nuevo metodo del service que vincula el UID
-        Usuario createdUsuario = usuarioService.saveUsuario(usuario, uid);
+        // Usamos el nuevo metodo del service que procesa el DTO y busca las relaciones reales
+        Usuario createdUsuario = usuarioService.guardarDesdeDTO(usuarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUsuario);
     }
 
