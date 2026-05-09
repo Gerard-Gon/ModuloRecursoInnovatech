@@ -27,9 +27,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios); 
     }
 
-    /**
-     * Nuevo endpoint para obtener los datos del usuario que está logueado.
-     */
+    //Nuevo endpoint para obtener los datos del usuario que está logueado.
     @GetMapping("/me")
     @Operation(summary = "Obtener mis datos de usuario (basado en el token)")
     public ResponseEntity<Usuario> getMyInfo(@RequestHeader("X-User-UID") String uid) {
@@ -40,6 +38,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+     //Test para ver si el token pasa del apigateway al backend
     @GetMapping("/test")
     @Operation(summary = "Prueba de recepción de UID desde el Gateway")
     public ResponseEntity<String> test(@RequestHeader(value = "X-User-UID") String uid) {
@@ -58,9 +57,10 @@ public class UsuarioController {
     public ResponseEntity<Usuario> createUsuario(
             @RequestBody Usuario usuario, 
             @RequestHeader("X-User-UID") String uid) { // Capturamos el UID del Gateway
+                                                       // con el token obtenido 
         
         usuario.setId(null); 
-        // Usamos el nuevo método del service que vincula el UID
+        // Usamos el nuevo metodo del service que vincula el UID
         Usuario createdUsuario = usuarioService.saveUsuario(usuario, uid);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUsuario);
     }
@@ -75,11 +75,7 @@ public class UsuarioController {
         Usuario existente = usuarioService.getUsuarioById(id);
         if (existente == null) {
             return ResponseEntity.notFound().build();
-        }
-        
-        // Opcional: Podrías validar que el 'uid' del token sea el mismo que el 'uidFirebase' del registro
-        // para que un usuario no pueda editar a otro.[cite: 2]
-        
+        }     
         usuario.setId(id);
         Usuario updatedUsuario = usuarioService.saveUsuario(usuario, uid);
         return ResponseEntity.ok(updatedUsuario); 

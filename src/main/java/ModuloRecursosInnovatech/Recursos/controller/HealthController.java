@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/health")
 public class HealthController{
 
-    //Aca esta el controller para mantener la api en render "viva"  
+    //Aca esta el controller para mantener la api en render "viva"
+    //hace que el robot al ver este controller mande un OK  
     @GetMapping
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("OK");
