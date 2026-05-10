@@ -10,18 +10,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "cargos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(name = "categoria", nullable = false, unique = true, length = 100)
-    private String categoria;
-    
+
+    @Column(name = "nombre_cargo", nullable = false, unique = true, length = 100)
+    private String nombreCargo;
 }
