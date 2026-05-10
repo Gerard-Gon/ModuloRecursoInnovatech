@@ -16,13 +16,14 @@ public class SecurityConfig {
 // Cambiar esto al subirlo a main  
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable()) // Crucial para que funcionen POST y DELETE
+        return http
+            .csrf(csrf -> csrf.disable())
+            // Desactiva el CORS aquí para que solo el Gateway lo maneje
+            .cors(cors -> cors.disable()) 
             .authorizeHttpRequests(auth -> auth
-                // Abrimos absolutamente todo para testear sin restricciones
-                .anyRequest().permitAll() 
-            );
-        return http.build();
+                .anyRequest().permitAll()
+            )
+            .build();
     }
 
     @Bean
