@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
    
-    @Value("${GATEWAY_SECRET}")
+    @Value("${GATEWAY_SECRET:local_test_back}")
     private String secretoCompartido;
 
     @Bean
