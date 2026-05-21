@@ -24,9 +24,9 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.disable()) 
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().access((authentication, context) -> {
                     String cabeceraSecreta = context.getRequest().getHeader("X-Gateway-Secret");
-                    // Compara la cabecera que viene del Gateway con tu variable de Render
                     boolean headerGateway = secretoCompartido != null && secretoCompartido.equals(cabeceraSecreta);
                     return new AuthorizationDecision(headerGateway);
                 })
