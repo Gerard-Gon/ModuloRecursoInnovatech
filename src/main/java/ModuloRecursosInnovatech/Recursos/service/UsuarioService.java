@@ -63,6 +63,27 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    // Método para actualizar usando el DTO (evita sobreescribir el UID y el Email)
+    public Usuario actualizarDesdeDTO(Integer id, UsuarioDTO dto) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+        
+        usuarioExistente.setNombre(dto.getNombre());
+        usuarioExistente.setSueldo(dto.getSueldo());
+
+        // Buscamos las entidades reales en la BD usando los IDs que mandó el Frontend
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + dto.getCategoriaId()));
+        usuarioExistente.setCategoria(categoria);
+
+        Cargo cargo = cargoRepository.findById(dto.getCargoId())
+                .orElseThrow(() -> new RuntimeException("Cargo no encontrado con ID: " + dto.getCargoId()));
+        usuarioExistente.setCargo(cargo);
+
+        // Guardamos (nota que NO tocamos el email ni el uidFirebase)
+        return usuarioRepository.save(usuarioExistente);
+    }
+
     public void deleteUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
