@@ -66,15 +66,15 @@ public class UsuarioController {
     @Operation(summary = "Cambiar un usuario")
     public ResponseEntity<Usuario> updateUsuario(
             @PathVariable Integer id, 
-            @RequestBody Usuario usuario,
-            @RequestHeader("X-User-UID") String uid) {
+            @RequestBody UsuarioDTO usuarioDTO) { // <-- Aquí cambiamos de Usuario a UsuarioDTO
         
         Usuario existente = usuarioService.getUsuarioById(id);
         if (existente == null) {
             return ResponseEntity.notFound().build();
         }     
-        usuario.setId(id);
-        Usuario updatedUsuario = usuarioService.saveUsuario(usuario, uid);
+        
+        // Llamamos al nuevo método seguro del Service
+        Usuario updatedUsuario = usuarioService.actualizarDesdeDTO(id, usuarioDTO);
         return ResponseEntity.ok(updatedUsuario); 
     }
 
