@@ -87,4 +87,17 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();  
     }
+
+    @PatchMapping("/firebase/{uid}/estado-conexion")
+    @Operation(summary = "Cambia el estado lógico del usuario usando su UID de Firebase")
+    public ResponseEntity<Usuario> cambiarEstadoConexionPorUid(
+            @PathVariable String uid, 
+            @RequestParam Boolean logeado) {
+        try {
+            Usuario usuarioActualizado = usuarioService.cambiarEstadoLogeoPorUid(uid, logeado);
+            return ResponseEntity.ok(usuarioActualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

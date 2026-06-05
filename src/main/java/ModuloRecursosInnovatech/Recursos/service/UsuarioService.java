@@ -84,6 +84,14 @@ public class UsuarioService {
         return usuarioRepository.save(usuarioExistente);
     }
 
+    public Usuario cambiarEstadoLogeoPorUid(String uidFirebase, Boolean estado) {
+        Usuario usuario = usuarioRepository.findByUidFirebase(uidFirebase)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con UID: " + uidFirebase));
+        
+        usuario.setLogeado(estado);
+        return usuarioRepository.save(usuario);
+    }
+
     public void deleteUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
