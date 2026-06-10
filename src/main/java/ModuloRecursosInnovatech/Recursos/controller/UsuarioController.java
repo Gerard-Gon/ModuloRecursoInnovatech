@@ -78,6 +78,19 @@ public class UsuarioController {
         return ResponseEntity.ok(updatedUsuario); 
     }
 
+    @PatchMapping("/firebase/{uid}/activar")
+    @Operation(summary = "Activa el estado del usuario usando su UID de Firebase")
+    public ResponseEntity<Usuario> activarUsuario(
+            @PathVariable String uid,
+            @RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            Usuario usuarioActualizado = usuarioService.activarUsuarioPorUid(uid, usuarioDTO.getActivo());
+            return ResponseEntity.ok(usuarioActualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar un usuario")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
@@ -88,16 +101,4 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();  
     }
 
-    @PatchMapping("/firebase/{uid}/estado-conexion")
-    @Operation(summary = "Cambia el estado lógico del usuario usando su UID de Firebase")
-    public ResponseEntity<Usuario> cambiarEstadoConexionPorUid(
-            @PathVariable String uid, 
-            @RequestParam Boolean logeado) {
-        try {
-            Usuario usuarioActualizado = usuarioService.cambiarEstadoLogeoPorUid(uid, logeado);
-            return ResponseEntity.ok(usuarioActualizado);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
