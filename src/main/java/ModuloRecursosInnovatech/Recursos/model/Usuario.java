@@ -25,7 +25,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
+    
     @Column(name = "uidFirebase", nullable = false, unique = true, length = 128)
     private String uidFirebase;
 
