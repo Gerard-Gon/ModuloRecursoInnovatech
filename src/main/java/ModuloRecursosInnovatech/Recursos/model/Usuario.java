@@ -38,8 +38,8 @@ public class Usuario {
     @Column(name = "sueldo", nullable = true)
     private Integer sueldo;
 
-    @Column(name = "logeado")
-    private Boolean logeado = false;
+    @Column(name = "activo", nullable = true)
+    private Boolean activo = false;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)

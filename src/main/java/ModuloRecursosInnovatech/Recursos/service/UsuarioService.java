@@ -50,6 +50,7 @@ public class UsuarioService {
         usuario.setEmail(dto.getEmail());
         usuario.setUidFirebase(dto.getUidFirebase()); // El UID llega desde Firebase Front
         usuario.setSueldo(dto.getSueldo());
+        usuario.setActivo(dto.getActivo());
 
         // Buscamos las entidades reales en la BD usando los IDs que mandó el Frontend
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
@@ -70,6 +71,7 @@ public class UsuarioService {
         
         usuarioExistente.setNombre(dto.getNombre());
         usuarioExistente.setSueldo(dto.getSueldo());
+        usuarioExistente.setActivo(dto.getActivo());
 
         // Buscamos las entidades reales en la BD usando los IDs que mandó el Frontend
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
@@ -84,16 +86,16 @@ public class UsuarioService {
         return usuarioRepository.save(usuarioExistente);
     }
 
-    public Usuario cambiarEstadoLogeoPorUid(String uidFirebase, Boolean estado) {
+    public Usuario activarUsuarioPorUid(String uidFirebase, Boolean activo) {
         Usuario usuario = usuarioRepository.findByUidFirebase(uidFirebase)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con UID: " + uidFirebase));
         
-        usuario.setLogeado(estado);
+        usuario.setActivo(activo);
         return usuarioRepository.save(usuario);
     }
+
 
     public void deleteUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
 }
-

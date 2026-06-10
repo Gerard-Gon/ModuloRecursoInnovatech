@@ -10,4 +10,5 @@ public class UsuarioDTO {
     private Integer sueldo;
     private Integer categoriaId; 
     private Integer cargoId;     
+    private Boolean activo;     
 }
