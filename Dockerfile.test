@@ -1,0 +1,10 @@
+# Usamos la misma imagen oficial de Maven con Java 21
+FROM maven:3.9.9-eclipse-temurin-21
+WORKDIR /app
+
+# Copiamos las dependencias y el código fuente
+COPY pom.xml .
+COPY src ./src
+
+# Ejecutamos las pruebas automáticamente al levantar el contenedor
+CMD ["mvn", "test"]
