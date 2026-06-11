@@ -6,6 +6,7 @@ import lombok.Data;
 public class TareaExternaDTO {
     private Integer id;
     private String nombreTareas; 
-    private String descripcionTareas; 
+    private String descripcionTareas;
+    private String progreso;
     private ProyectoExternoDTO proyecto;
 }
