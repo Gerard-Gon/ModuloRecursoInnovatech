@@ -25,7 +25,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
+    
     @Column(name = "uidFirebase", nullable = false, unique = true, length = 128)
     private String uidFirebase;
 
@@ -37,6 +37,9 @@ public class Usuario {
 
     @Column(name = "sueldo", nullable = true)
     private Integer sueldo;
+
+    @Column(name = "activo", nullable = true)
+    private Boolean activo = false;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
